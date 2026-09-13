@@ -72,31 +72,3 @@ window.__sh.close()              // close the page
 window.__sh.state                // the loaded record and session mode
 window.__sh.api                  // the request helpers the page uses
 ```
-
-## Development
-
-The script is standalone; there is no build step. With Node.js installed:
-
-```text
-npm install
-npx playwright install chromium
-npm run check
-npm test
-```
-
-`npm test` runs 30 browser tests against a simulated Discord page. None of them submit real account actions.
-
-- **15 in `tests/captcha.test.cjs`** cover CAPTCHA handling.
-- **15 in `tests/hub.test.cjs`** cover the page:
-  - the endpoints and bodies each session sends
-  - Discord's theme colors
-  - the capability comparison
-  - appeals
-  - the fetch fallback
-  - escaping of server text
-  - keyboard navigation
-  - a 400px layout
-
-Discord's internal modules and API can change, and these tests don't cover whether Discord's servers accept a request from a live account.
-
-`npm run test:live` is an optional smoke check. It loads the real hCaptcha SDK with [hCaptcha's official test key](https://docs.hcaptcha.com/#integration-testing-test-keys) on a local page, confirms the checkbox is visible and its test response reaches a mock request, and saves a screenshot to `test-results/hcaptcha-visible.png`. It sends no Discord requests.
